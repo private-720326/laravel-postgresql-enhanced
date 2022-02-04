@@ -21,6 +21,54 @@ class ReturningTest extends TestCase
         ');
     }
 
+    public function testDeleteReturningAll(): void
+    {
+        $this->getConnection()->table('example')->insert(['str' => 'TmBZCdqd']);
+        $this->getConnection()->table('example')->insert(['str' => 'BK5tSuQM']);
+
+        $queries = $this->withQueryLog(function (): void {
+            $result = $this->getConnection()
+                ->table('example')
+                ->where('str', 'TmBZCdqd')
+                ->deleteReturning();
+
+            $this->assertEquals([(object) ['id' => 1, 'str' => 'TmBZCdqd']], $result);
+        });
+        $this->assertEquals(['delete from "example" where "str" = ? returning *'], array_column($queries, 'query'));
+    }
+
+    public function testDeleteReturningEmpty(): void
+    {
+        $this->getConnection()->table('example')->insert(['str' => 'COsfIVwd']);
+        $this->getConnection()->table('example')->insert(['str' => 'NM8gm97z']);
+
+        $queries = $this->withQueryLog(function (): void {
+            $result = $this->getConnection()
+                ->table('example')
+                ->where('str', 'JT5z0MzE')
+                ->deleteReturning();
+
+            $this->assertEquals([], $result);
+        });
+        $this->assertEquals(['delete from "example" where "str" = ? returning *'], array_column($queries, 'query'));
+    }
+
+    public function testDeleteReturningSelection(): void
+    {
+        $this->getConnection()->table('example')->insert(['str' => 'FauLvDe6']);
+        $this->getConnection()->table('example')->insert(['str' => 'TeYpcH5p']);
+
+        $queries = $this->withQueryLog(function (): void {
+            $result = $this->getConnection()
+                ->table('example')
+                ->where('str', 'FauLvDe6')
+                ->deleteReturning(returning: ['str']);
+
+            $this->assertEquals([(object) ['str' => 'FauLvDe6']], $result);
+        });
+        $this->assertEquals(['delete from "example" where "str" = ? returning "str"'], array_column($queries, 'query'));
+    }
+
     public function testInsertOrIgnoreReturningAll(): void
     {
         $queries = $this->withQueryLog(function (): void {

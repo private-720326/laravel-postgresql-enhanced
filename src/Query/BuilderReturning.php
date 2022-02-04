@@ -13,6 +13,30 @@ use Illuminate\Support\Arr;
 trait BuilderReturning
 {
     /**
+     * Delete records from the database.
+     */
+    public function deleteReturning(mixed $id = null, array $returning = ['*']): array
+    {
+        // If an ID is passed to the method, we will set the where clause to check the
+        // ID to let developers to simply and quickly remove a single row from this
+        // database without manually specifying the "where" clauses on the query.
+        if (null !== $id) {
+            $this->where($this->from.'.id', '=', $id);
+        }
+
+        $sqlDelete = $this->getGrammar()->compileDelete($this);
+        $sqlReturning = $this->getGrammar()->compileReturning($this, $returning);
+
+        if (method_exists($this, 'applyBeforeQueryCallbacks')) {
+            $this->applyBeforeQueryCallbacks();
+        }
+
+        return $this->getConnection()->returningStatement("{$sqlDelete} {$sqlReturning}", $this->cleanBindings(
+            $this->getGrammar()->prepareBindingsForDelete($this->bindings)
+        ));
+    }
+
+    /**
      * Insert new records into the database while ignoring errors.
      */
     public function insertOrIgnoreReturning(array $values, array $returning = ['*']): array
