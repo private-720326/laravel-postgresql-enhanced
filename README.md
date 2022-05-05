@@ -1,10 +1,10 @@
 
 [![License][icon-license]][href-license]
 [![PHP][icon-php]][href-php]
-[![PHP][icon-psalmconfig]][href-psalmconfig]
+[![PHP][icon-phpstanconfig]][href-phpstanconfig]
 [![Latest Version on Packagist][icon-version]][href-version]
 [![GitHub PHPUnit Action Status][icon-tests]][href-tests]
-[![GitHub Psalm Action Status][icon-psalmtest]][href-psalmtest]
+[![GitHub PHPStan Action Status][icon-phpstantest]][href-phpstantest]
 [![GitHub PhpCsFixer Action Status][icon-style]][href-style]
 
 Laravel supports many different databases and therefore has to limit itself to the lowest common denominator of all databases. PostgreSQL, however, offers a ton more functionality which is being added to Laravel by this extension.
@@ -669,15 +669,15 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 
 [href-license]: LICENSE.md
 [href-php]: https://packagist.org/packages/tpetry/laravel-postgresql-enhanced
-[href-psalmconfig]: psalm.xml.dist
-[href-psalmtest]: https://github.com/tpetry/laravel-postgresql-enhanced/actions/workflows/psalm.yml
+[href-phpstanconfig]: phpstan.neon.dist
+[href-phpstantest]: https://github.com/tpetry/laravel-postgresql-enhanced/actions/workflows/phpstan.yml
 [href-style]: https://github.com/tpetry/laravel-postgresql-enhanced/actions/workflows/php_cs_fixer.yml
 [href-tests]: https://github.com/tpetry/laravel-postgresql-enhanced/actions/workflows/phpunit.yml
 [href-version]: https://packagist.org/packages/tpetry/laravel-postgresql-enhanced
 [icon-codestyle]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHP%20CS%20Fixer?label=Code%20Style
 [icon-license]: https://img.shields.io/github/license/tpetry/laravel-postgresql-enhanced?color=blue&label=License
-[icon-psalmconfig]: https://img.shields.io/badge/Psalm%20Level-4-blue
-[icon-psalmtest]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/Psalm?label=Psalm
+[icon-phpstanconfig]: https://img.shields.io/badge/PHPStan%20Level-4-blue
+[icon-phpstantest]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHPStan?label=PHPStan
 [icon-php]: https://img.shields.io/packagist/php-v/tpetry/laravel-postgresql-enhanced?color=blue&label=PHP
 [icon-style]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHP%20CS%20Fixer?label=Code%20Style
 [icon-tests]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHPUnit?label=Tests
