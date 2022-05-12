@@ -19,6 +19,7 @@ composer require tpetry/laravel-postgresql-enhanced
 
 # Features
 
+- [PHPStan](#phpstan)
 - [Migration](#migration)
     - [Zero Downtime Migration](#zero-downtime-migration)
     - [Extensions](#extensions)
@@ -51,6 +52,29 @@ composer require tpetry/laravel-postgresql-enhanced
     - [Lazy By Cursor](#lazy-by-cursor)
 - [Eloquent](#eloquent)
     - [Refresh Data on Save](#refresh-data-on-save)
+
+## PHPStan
+
+This extension is adding a lot of missing PostgreSQL functionality to Laravel.
+If you are using [PHPStan](https://phpstan.org/) to statically analyze your code, you may get errors because PHPStan doesn't know of the functionality added to Laravel:
+
+```
+ ------ ----------------------------------------------------------------------------------- 
+  Line   Console/Commands/DeleteOldUsers.php                                                           
+ ------ ----------------------------------------------------------------------------------- 
+  36     Call to an undefined method Illuminate\Database\Query\Builder::deleteReturning().  
+ ------ ----------------------------------------------------------------------------------- 
+```
+
+To solve this problem a custom set of PHPStan extensions have been developed to get full static analysis support for Laravel 9!
+You should first install [Larastan](https://github.com/nunomaduro/larastan) to get PHPStan support for Laravel and then activate the PostgreSQL PHPStan extension.
+Just add the following path to your `includes` list in `phpstan.neon`, your config should now look like this:
+
+```
+includes:
+    - ./vendor/nunomaduro/larastan/extension.neon
+    - ./vendor/tpetry/laravel-postgresql-enhanced/phpstan-extension.neon
+```
 
 ## Migration
 
@@ -676,7 +700,7 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [href-version]: https://packagist.org/packages/tpetry/laravel-postgresql-enhanced
 [icon-codestyle]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHP%20CS%20Fixer?label=Code%20Style
 [icon-license]: https://img.shields.io/github/license/tpetry/laravel-postgresql-enhanced?color=blue&label=License
-[icon-phpstanconfig]: https://img.shields.io/badge/PHPStan%20Level-4-blue
+[icon-phpstanconfig]: https://img.shields.io/badge/PHPStan%20Level-5-blue
 [icon-phpstantest]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHPStan?label=PHPStan
 [icon-php]: https://img.shields.io/packagist/php-v/tpetry/laravel-postgresql-enhanced?color=blue&label=PHP
 [icon-style]: https://img.shields.io/github/workflow/status/tpetry/laravel-postgresql-enhanced/PHP%20CS%20Fixer?label=Code%20Style
