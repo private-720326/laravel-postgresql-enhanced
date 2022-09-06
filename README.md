@@ -718,8 +718,24 @@ DB::transaction(function() {
 
 ### Where Clauses
 
+#### Like
+
+Lorem Ipsum
+
 ```php
 $query->whereLike($column, $value, $caseInsensitive = false);
+$query->orWhereLike($column, $value, $caseInsensitive = false);
+```
+
+#### Between Symmetric
+
+Lorm Ipsum
+
+```php
+$query->whereBetweenSymmetric($column, iterable $values);
+$query->whereNotBetweenSymmetric($column, iterable $values);
+$query->orWhereBetweenSymmetric($column, iterable $values);
+$query->orWhereNotBetweenSymmetric($column, iterable $values);
 ```
 
 ## Eloquent
