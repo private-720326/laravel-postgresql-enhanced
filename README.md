@@ -720,7 +720,7 @@ DB::transaction(function() {
 
 #### Like
 
-Lorem Ipsum
+With the `whereLike` scope you can compare a column to a (case-insensitive) value. 
 
 ```php
 $query->whereLike($column, $value, $caseInsensitive = false);
@@ -729,7 +729,8 @@ $query->orWhereLike($column, $value, $caseInsensitive = false);
 
 #### Between Symmetric
 
-Lorm Ipsum
+Laravel already provides a `whereBetween` scope, but you have to provide the values in sorted order that the smaller value is the first and the bigger one the second array item (`[4, 80]`).
+With PostgreSQL's `BETWEEN SYMMETRIC` keyword you don't have to this anymore, it will automatically reorder the values.
 
 ```php
 $query->whereBetweenSymmetric($column, iterable $values);
