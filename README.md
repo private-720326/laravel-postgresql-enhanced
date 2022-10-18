@@ -718,6 +718,19 @@ DB::transaction(function() {
 
 ### Where Clauses
 
+#### Any/All
+
+```php
+$query->whereAll($column, string $operator, iterable $values);
+$query->whereNotAll($column, string $operator, iterable $values);
+$query->orWhereAll($column, string $operator, iterable $values);
+$query->orWhereNotAll($column, string $operator, iterable $values)
+$query->whereAny($column, string $operator, iterable $values);
+$query->whereNotAny($column, string $operator, iterable $values);
+$query->orWhereAny($column, string $operator, iterable $values);
+$query->orWhereNotAny($column, string $operator, iterable $values)
+```
+
 #### Boolean
 
 As Laravel always casts boolean values to integers you will get a PostgreSQL errors like `operator does not exist: boolean = integer` sometimes.
