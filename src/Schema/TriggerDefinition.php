@@ -17,7 +17,7 @@ class TriggerDefinition extends Fluent
      */
     public function forEachRow(): static
     {
-        $this->forEach = 'row';
+        $this['forEach'] = 'row';
 
         return $this;
     }
@@ -27,7 +27,7 @@ class TriggerDefinition extends Fluent
      */
     public function forEachStatement(): static
     {
-        $this->forEach = 'statement';
+        $this['forEach'] = 'statement';
 
         return $this;
     }
@@ -37,7 +37,7 @@ class TriggerDefinition extends Fluent
      */
     public function transitionTables(?string $old = null, ?string $new = null): static
     {
-        $this->transitionTables = compact('old', 'new');
+        $this['transitionTables'] = compact('old', 'new');
 
         return $this;
     }
