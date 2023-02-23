@@ -13,6 +13,22 @@ use Tpetry\PostgresqlEnhanced\Support\Helpers\Query;
 trait GrammarTrigger
 {
     /**
+     * Compile a drop trigger command.
+     */
+    public function compileDropTrigger(Blueprint $blueprint, Fluent $command): string
+    {
+        return "drop trigger {$this->wrap($command['trigger'])} on {$this->wrapTable($blueprint->getTable())}";
+    }
+
+    /**
+     * Compile a drop trigger if exists command.
+     */
+    public function compileDropTriggerIfExists(Blueprint $blueprint, Fluent $command): string
+    {
+        return "drop trigger if exists {$this->wrap($command['trigger'])} on {$this->wrapTable($blueprint->getTable())}";
+    }
+
+    /**
      * Compile a create trigger command.
      */
     public function compileTrigger(Blueprint $blueprint, Fluent $command): string
@@ -55,21 +71,5 @@ trait GrammarTrigger
         $sql = implode(' ', array_filter($index, fn ($part) => $part));
 
         return $sql;
-    }
-
-    /**
-     * Compile a drop trigger command.
-     */
-    public function compileDropTrigger(Blueprint $blueprint, Fluent $command): string
-    {
-        return "drop trigger {$this->wrap($command['trigger'])} on {$this->wrapTable($blueprint->getTable())}";
-    }
-
-    /**
-     * Compile a drop trigger if exists command.
-     */
-    public function compileDropTriggerIfExists(Blueprint $blueprint, Fluent $command): string
-    {
-        return "drop trigger if exists {$this->wrap($command['trigger'])} on {$this->wrapTable($blueprint->getTable())}";
     }
 }

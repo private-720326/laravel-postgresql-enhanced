@@ -38,7 +38,6 @@ class TriggerTest extends TestCase
         $this->assertEquals([
             'create trigger "noop_916042" before update on "example" execute function noop(42)',
             'create trigger "noop_652445" after delete on "example" execute function noop(0815)',
-
         ], array_column($queries, 'query'));
     }
 
@@ -64,28 +63,23 @@ class TriggerTest extends TestCase
         $this->assertEquals(['create trigger "noop_311234" after delete on "example" for each statement execute function noop()'], array_column($queries, 'query'));
     }
 
-    public function testCreateTriggerWhenSql(): void
+    public function testCreateTriggerReplace(): void
     {
         $queries = $this->withQueryLog(function (): void {
             Schema::table('example', function (Blueprint $table): void {
-                $table->trigger('noop_274029', 'noop()', 'after delete')
-                    ->forEachRow()
-                    ->when('OLD.id = 0815');
+                $table->trigger('noop_322869', 'noop()', 'after update')
+                    ->replace();
+                $table->trigger('noop_485134', 'noop()', 'after update')
+                    ->replace(true);
+                $table->trigger('noop_277441', 'noop()', 'after update')
+                    ->replace(false);
             });
         });
-        $this->assertEquals(['create trigger "noop_274029" after delete on "example" for each row when (OLD.id = 0815) execute function noop()'], array_column($queries, 'query'));
-    }
-
-    public function testCreateTriggerWhenBuilder(): void
-    {
-        $queries = $this->withQueryLog(function (): void {
-            Schema::table('example', function (Blueprint $table): void {
-                $table->trigger('noop_274029', 'noop()', 'after insert')
-                    ->forEachRow()
-                    ->when(fn (Builder $query) => $query->where('NEW.id', 42));
-            });
-        });
-        $this->assertEquals(['create trigger "noop_274029" after insert on "example" for each row when (NEW."id" = 42) execute function noop()'], array_column($queries, 'query'));
+        $this->assertEquals([
+            'create or replace trigger "noop_322869" after update on "example" execute function noop()',
+            'create or replace trigger "noop_485134" after update on "example" execute function noop()',
+            'create trigger "noop_277441" after update on "example" execute function noop()',
+        ], array_column($queries, 'query'));
     }
 
     public function testCreateTriggerTransitionTables(): void
@@ -110,25 +104,29 @@ class TriggerTest extends TestCase
         ], array_column($queries, 'query'));
     }
 
-    public function testCreateTriggerReplace(): void
+    public function testCreateTriggerWhenBuilder(): void
     {
         $queries = $this->withQueryLog(function (): void {
             Schema::table('example', function (Blueprint $table): void {
-                $table->trigger('noop_322869', 'noop()', 'after update')
-                    ->replace();
-                $table->trigger('noop_485134', 'noop()', 'after update')
-                    ->replace(true);
-                $table->trigger('noop_277441', 'noop()', 'after update')
-                    ->replace(false);
+                $table->trigger('noop_274029', 'noop()', 'after insert')
+                    ->forEachRow()
+                    ->when(fn (Builder $query) => $query->where('NEW.id', 42));
             });
         });
-        $this->assertEquals([
-            'create or replace trigger "noop_322869" after update on "example" execute function noop()',
-            'create or replace trigger "noop_485134" after update on "example" execute function noop()',
-            'create trigger "noop_277441" after update on "example" execute function noop()',
-        ], array_column($queries, 'query'));
+        $this->assertEquals(['create trigger "noop_274029" after insert on "example" for each row when (NEW."id" = 42) execute function noop()'], array_column($queries, 'query'));
     }
 
+    public function testCreateTriggerWhenSql(): void
+    {
+        $queries = $this->withQueryLog(function (): void {
+            Schema::table('example', function (Blueprint $table): void {
+                $table->trigger('noop_274029', 'noop()', 'after delete')
+                    ->forEachRow()
+                    ->when('OLD.id = 0815');
+            });
+        });
+        $this->assertEquals(['create trigger "noop_274029" after delete on "example" for each row when (OLD.id = 0815) execute function noop()'], array_column($queries, 'query'));
+    }
 
     public function testDropTrigger(): void
     {
