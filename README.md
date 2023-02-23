@@ -24,6 +24,7 @@ composer require tpetry/laravel-postgresql-enhanced
     - [Zero Downtime Migration](#zero-downtime-migration)
     - [Extensions](#extensions)
     - [Functions](#functions)
+    - [Triggers](#triggers)
     - [Views](#views)
         - [Materialized Views](#materialized-views)
     - [Indexes](#indexes)
@@ -220,6 +221,26 @@ use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
 
 Schema::dropFunction('sales_tax');
 Schema::dropFunctionIfExists('sales_tax');
+```
+
+### Triggers
+
+#### Create Triggers
+
+TODO
+
+#### Drop Triggers
+
+To remove trigger, you may use the `dropTrigger` and `dropTriggerIfExists` methods provided by the table's `Blueprint` class:
+
+```php
+use Tpetry\PostgresqlEnhanced\Schema\Blueprint;
+use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
+
+Schema::table('projects', function (Blueprint $table): void {
+    $table->dropTrigger('update_quota');
+    $table->dropTriggerIfExists('update_quota');
+});
 ```
 
 ### Views
