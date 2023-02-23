@@ -227,7 +227,47 @@ Schema::dropFunctionIfExists('sales_tax');
 
 #### Create Triggers
 
-TODO
+On your `Blueprint` you can add triggers to a table.
+You need to pass in a unique name, call of a function you've created before and the action that will fire the trigger:
+
+```php
+use Tpetry\PostgresqlEnhanced\Schema\Blueprint;
+use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
+
+Schema::table('projects', function (Blueprint $table): void {
+    $table->trigger('rollup_quota', 'update_quota_by_projects()', 'AFTER INSERT OR DELETE');
+});
+```
+
+You can 
+
+A sixth parameter lets you define further options for the function. Please [read the manual](https://www.postgresql.org/docs/current/sql-createfunction.html) for the exact meaning, some of them set enable or disable ways for PostgreSQL to optimize the execution.
+
+| Modifier                                     | Description                                                          |
+|----------------------------------------------|----------------------------------------------------------------------|
+| ->forEachRow()                               | The trigger will be called for every row.                            |
+| ->forEachStatement()                         | The trigger will be called once for each statement *(default)*.      |
+| ->transitionTables()                         | 1.0                                                                  |
+| ->when('type = 4')<br><br>->when('type = 4') |                                                                      |
+|                                              |                                                                      |
+| ->replace(true)                              | The trigger will replace an existing one defined with the same name. |
+
+The former example can be optimized by using the special `sql:expression` language identifier created by this driver. The function body can only be one SQL expression, but it will be inlined in the query instead of executed with recent PostgreSQL versions for much better performance:
+
+```php
+use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
+
+Schema::createFunction('sales_tax', ['subtotal' => 'numeric'], 'numeric', 'sql:expression', 'subtotal * 0.06', [
+  'parallel' => 'safe',
+  'volatility' => 'immutable',
+]);
+```
+
+> **Note**
+> All trigger are `->forEachStatement()` by default on PostgreSQL. You should use them together with transition tables for the best performance.
+
+> **Note**
+> PostgreSQL always updates rows even if nothing changes which may affect your performance. You can add the `suppress_redundant_updates_trigger()` trigger with a `BEFORE UPDATE` action to all tables.
 
 #### Drop Triggers
 
