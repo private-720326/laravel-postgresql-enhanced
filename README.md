@@ -239,20 +239,13 @@ Schema::table('projects', function (Blueprint $table): void {
 });
 ```
 
-You can 
-
-A sixth parameter lets you define further options for the function. Please [read the manual](https://www.postgresql.org/docs/current/sql-createfunction.html) for the exact meaning, some of them set enable or disable ways for PostgreSQL to optimize the execution.
-
-| Modifier                                     | Description                                                          |
-|----------------------------------------------|----------------------------------------------------------------------|
-| ->forEachRow()                               | The trigger will be called for every row.                            |
-| ->forEachStatement()                         | The trigger will be called once for each statement *(default)*.      |
-| ->transitionTables()                         | 1.0                                                                  |
-| ->when('type = 4')<br><br>->when('type = 4') |                                                                      |
-|                                              |                                                                      |
-| ->replace(true)                              | The trigger will replace an existing one defined with the same name. |
-
-The former example can be optimized by using the special `sql:expression` language identifier created by this driver. The function body can only be one SQL expression, but it will be inlined in the query instead of executed with recent PostgreSQL versions for much better performance:
+| Modifier                                                                          | Description                                                                                                                                                        |
+|-----------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `->forEachRow()`                                                                  | The trigger will be called for every row.                                                                                                                          |
+| `->forEachStatement()`                                                            | The trigger will be called once for each statement *(default)*.                                                                                                    |
+| `->transitionTables(old: 'oldrows', new: 'newrows')`                              | The forEachStatement-trigger will provide the before/after state of the affected rows in special tables. You can omit either option if not valid for this trigger. |
+| `->when('NEW.type = 4')`<br>`->when(fn ($query) => $query->where('NEW.type', 4))` | The trigger should only called when the condition matches *(only with forEachRow)*.                                                                                |
+| `->replace(true)`                                                                 | The trigger will replace an existing one defined with the same name.                                                                                               |
 
 ```php
 use Tpetry\PostgresqlEnhanced\Support\Facades\Schema;
