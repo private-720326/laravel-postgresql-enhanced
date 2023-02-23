@@ -29,7 +29,7 @@ trait BlueprintTrigger
      */
     public function trigger(string $name, string $action, string $fire): TriggerDefinition
     {
-        $trigger = new TriggerDefinition(['name' => 'trigger', 'trigger' => $name, ...compact('action', 'fire')]);
+        $trigger = new TriggerDefinition(['name' => 'trigger', 'trigger' => $name] + compact('action', 'fire'));
         $this->commands[] = $trigger;
 
         return $trigger;
