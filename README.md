@@ -617,7 +617,7 @@ Schema::table('books', function (Blueprint $table): void {
 #### Initial
 
 Sometimes a new column needs to be added and all existing rows should get an initial value.
-With the initial modifier, you can assign a value to all present rows while all new ones have a different value or none.
+With the `initial` modifier, you can assign a value to all present rows while all new ones will have no default value or a different one.
 
 ```php
 use Tpetry\PostgresqlEnhanced\Schema\Blueprint;
