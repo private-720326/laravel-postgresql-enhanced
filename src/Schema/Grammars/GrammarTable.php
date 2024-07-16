@@ -20,7 +20,7 @@ trait GrammarTable
         // In Laravel 11.15.0 the logic was changed that compileAdd is only for one column (the one in the command) of
         // the blueprint and not all ones of the blueprint as before.
         /** @var \Illuminate\Database\Schema\ColumnDefinition[] $columns */
-        $columns = isset($command['column']) ? [$command['column']] : $blueprint->getColumns();
+        $columns = isset($command['column']) ? [$command['column']] : $blueprint->getAddedColumns();
 
         $sqlChangeDefault = [];
         foreach ($columns as $column) {
