@@ -22,8 +22,7 @@ trait GrammarTypes
         // object and getting the property directly.
         $prefix = match (true) {
             method_exists($blueprint, 'getPrefix') => $blueprint->getPrefix(),
-            property_exists($blueprint, 'prefix') => $blueprint->prefix,
-            default => '',
+            default => $blueprint->prefix, // @phpstan-ignore-line property.protected
         };
 
         // In Laravel 11.15.0 the logic was changed that compileChange is only for one column (the one in the command)
@@ -45,9 +44,9 @@ trait GrammarTypes
                 $regex = Regex::match('/^ALTER table (?P<table>.*?) alter (column )?(?P<column>.*?) type (?P<type>\w+)(?P<modifiers>,.*)?/i', $sql);
 
                 if (filled($modifierUsing) && $regex->hasMatch()) {
-                    $using = match ($connection->getSchemaGrammar()->isExpression($column['using'])) {
-                        true => $connection->getSchemaGrammar()->getValue($column['using']),
-                        false => $column['using'],
+                    $using = match ($connection->getSchemaGrammar()->isExpression($modifierUsing)) {
+                        true => $connection->getSchemaGrammar()->getValue($modifierUsing),
+                        false => $modifierUsing,
                     };
 
                     $queries[] = match (filled($modifiers = $regex->groupOr('modifiers', ''))) {
