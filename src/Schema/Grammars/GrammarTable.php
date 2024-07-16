@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tpetry\PostgresqlEnhanced\Schema\Grammars;
 
+use Arr;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Fluent;
 
@@ -38,13 +39,8 @@ trait GrammarTable
             $column['default'] = $column['initial'];
         }
 
-        dump([
-            parent::compileAdd($blueprint, $command),
-            ...$sqlChangeDefault,
-        ]);
-
         return [
-            parent::compileAdd($blueprint, $command),
+            ...Arr::wrap(parent::compileAdd($blueprint, $command)), // Some Laravel versions produce a single string while others an array.
             ...$sqlChangeDefault,
         ];
     }
