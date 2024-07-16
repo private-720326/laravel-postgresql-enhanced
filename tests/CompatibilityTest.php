@@ -30,7 +30,7 @@ class CompatibilityTest extends TestCase
                 'alter table "test" add column "column_two" text not null',
             ],
             default => [
-                'aaaa',
+                'alter table "test" add column "column_one" text not null, add column "column_two" text not null',
             ],
         };
 
