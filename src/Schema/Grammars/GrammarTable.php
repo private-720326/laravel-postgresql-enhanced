@@ -42,6 +42,7 @@ trait GrammarTable
             parent::compileAdd($blueprint, $command),
             ...$sqlChangeDefault,
         ]);
+
         return [
             parent::compileAdd($blueprint, $command),
             ...$sqlChangeDefault,
