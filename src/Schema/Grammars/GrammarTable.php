@@ -16,26 +16,31 @@ trait GrammarTable
      */
     public function compileAdd(Blueprint $blueprint, Fluent $command): array
     {
-        /* @var \Illuminate\Database\Schema\ColumnDefinition $column */
-        dump($command);
-        $column = $command['column'];
-        $attributes = $column->getAttributes();
-        if (!\array_key_exists('initial', $attributes)) {
-            return [parent::compileAdd($blueprint, $command)];
-        }
+        // In Laravel 11.15.0 the logic was changed that compileAdd is only for one column (the one in the command) of
+        // the blueprint and not all ones of the blueprint as before.
+        /** @var \Illuminate\Database\Schema\ColumnDefinition[] $columns */
+        $columns = isset($command['column']) ? [$command['column']] : $blueprint->getColumns();
 
-        // Transform the command to a standard one understood by Laravel:
-        // * The `initial` modifier is saved to the `default` modifier to set the initial value
-        // * A SQL query is created to set the `default` modifier afterward to NULL or the specified value.
-        $sqlChangeDefault = match (\array_key_exists('default', $attributes)) {
-            true => "alter table {$this->wrapTable($blueprint)} alter column {$this->wrap($column)} set default {$this->getDefaultValue($column['default'])}",
-            false => "alter table {$this->wrapTable($blueprint)} alter column {$this->wrap($column)} drop default",
-        };
-        $column['default'] = $column['initial'];
+        $sqlChangeDefault = [];
+        foreach ($columns as $column) {
+            $attributes = $column->getAttributes();
+            if (!\array_key_exists('initial', $attributes)) {
+                continue;
+            }
+
+            // Transform the column definition to a standard one understood by Laravel:
+            // - The `initial` modifier is saved to the `default` modifier to set the initial value when creating the column.
+            // - A SQL query is created to reset the `default` value afterward to NULL or the specified value.
+            $sqlChangeDefault[] = match (\array_key_exists('default', $attributes)) {
+                true => "alter table {$this->wrapTable($blueprint)} alter column {$this->wrap($column)} set default {$this->getDefaultValue($column['default'])}",
+                false => "alter table {$this->wrapTable($blueprint)} alter column {$this->wrap($column)} drop default",
+            };
+            $column['default'] = $column['initial'];
+        }
 
         return [
             parent::compileAdd($blueprint, $command),
-            $sqlChangeDefault,
+            ...$sqlChangeDefault,
         ];
     }
 
