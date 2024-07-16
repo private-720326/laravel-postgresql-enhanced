@@ -16,7 +16,7 @@ trait GrammarTable
      */
     public function compileAdd(Blueprint $blueprint, Fluent $command): array
     {
-        /** @var \Illuminate\Database\Schema\ColumnDefinition $column */
+        /* @var \Illuminate\Database\Schema\ColumnDefinition $column */
         dump($command);
         $column = $command['column'];
         $attributes = $column->getAttributes();
