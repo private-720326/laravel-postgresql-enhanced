@@ -38,6 +38,10 @@ trait GrammarTable
             $column['default'] = $column['initial'];
         }
 
+        dump([
+            parent::compileAdd($blueprint, $command),
+            ...$sqlChangeDefault,
+        ]);
         return [
             parent::compileAdd($blueprint, $command),
             ...$sqlChangeDefault,
