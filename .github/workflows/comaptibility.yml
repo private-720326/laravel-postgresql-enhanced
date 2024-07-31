@@ -14,9 +14,8 @@ jobs:
         php: [8.2, 8.3]
         laravel: [11.x-dev]
         testbench: [9.*]
-        stability: [prefer-lowest, prefer-stable]
 
-    name: P${{ matrix.php }} - ${{ matrix.stability }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     services:
       postgres:
@@ -49,8 +48,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
-          composer update --${{ matrix.stability }} --prefer-dist --no-interaction
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction
 
       - name: Execute tests
         run: vendor/bin/phpunit
