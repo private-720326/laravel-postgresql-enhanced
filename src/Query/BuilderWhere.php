@@ -63,6 +63,7 @@ trait BuilderWhere
      *
      * @param Expression|string $column
      * @param Expression|string $value
+     * @param bool $caseSensitive
      */
     public function orWhereLike($column, $value, $caseSensitive = false): static
     {
