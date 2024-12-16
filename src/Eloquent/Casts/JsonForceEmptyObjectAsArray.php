@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tpetry\PostgresqlEnhanced\Eloquent\Casts;
 
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;

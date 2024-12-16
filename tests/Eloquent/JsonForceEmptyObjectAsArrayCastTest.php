@@ -6,7 +6,6 @@ namespace Tpetry\PostgresqlEnhanced\Tests\Eloquent;
 
 use Composer\Semver\Comparator;
 use Illuminate\Database\Eloquent\Model;
-use Tpetry\PostgresqlEnhanced\Eloquent\Casts\IntegerArrayCast;
 use Tpetry\PostgresqlEnhanced\Eloquent\Casts\JsonForceEmptyObjectAsArray;
 use Tpetry\PostgresqlEnhanced\Tests\TestCase;
 
