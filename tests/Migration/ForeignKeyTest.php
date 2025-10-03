@@ -23,15 +23,15 @@ class ForeignKeyTest extends TestCase
 
         $queries = $this->withQueryLog(function (): void {
             Schema::table('test_114824', function (Blueprint $table): void {
-                $table->foreign('col_306219')->references('col_306219')->on('test_589166')->notEnforced(true);
-                $table->foreignId('col_228813')->constrained(table: 'test_589166', column: 'col_228813')->notEnforced(true);
+                $table->foreign('col_306219')->references('col_306219')->on('test_589166')->notEnforced(false);
+                $table->foreignId('col_228813')->constrained(table: 'test_589166', column: 'col_228813')->notEnforced(false);
             });
         });
         // In Laravel 11.x the query order changed.
         $this->assertEquals(Arr::sort(array_column($queries, 'query')), [
             'alter table "test_114824" add column "col_228813" bigint not null',
-            'alter table "test_114824" add constraint "test_114824_col_306219_foreign" foreign key ("col_306219") references "test_589166" ("col_306219") not enforced',
-            'alter table "test_114824" add constraint "test_114824_col_228813_foreign" foreign key ("col_228813") references "test_589166" ("col_228813") not enforced',
+            'alter table "test_114824" add constraint "test_114824_col_306219_foreign" foreign key ("col_306219") references "test_589166" ("col_306219")',
+            'alter table "test_114824" add constraint "test_114824_col_228813_foreign" foreign key ("col_228813") references "test_589166" ("col_228813")',
         ]);
     }
 

@@ -383,7 +383,7 @@ Schema::refreshMaterializedView('users_with_2fa', withData: true);
 
 Many large applications don't use foreign keys because of performance reasons and migrations become more complicated.
 However, they are convenient as graphical tools can show the relationships between tables.
-With PostgreSQL 18, you can set `NOT ENFORCED` so that they no longer impact performance and migrations, while still helping database tools.
+With PostgreSQL 18, you can activate the `NOT ENFORCED` mode for foreign keys so they are never checked, while still helping database tools to show the relationships between tables.
 
 On top of that, the integration with Laravel is built so you can have actual foreign keys in development/testing (to see development issues early when foreign key errors are thrown), while production uses the non-enforced version.
 
