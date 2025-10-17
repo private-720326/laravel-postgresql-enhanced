@@ -47,6 +47,10 @@ class ForeignKeyTest extends TestCase
 
     public function testPeriod(): void
     {
+        if (Comparator::lessThan($this->getConnection()->serverVersion(), '18')) {
+            $this->markTestSkipped('Foreign key PERIOD is first supported with PostgreSQL 18.');
+        }
+
         Schema::createExtensionIfNotExists('btree_gist');
         $this->getConnection()->statement('CREATE TABLE test_668671 (col_975277 bigint, valid tstzrange, PRIMARY KEY (col_975277, valid WITHOUT OVERLAPS))');
         $this->getConnection()->statement('CREATE TABLE test_178855 (col_975277 bigint, valid tstzrange, PRIMARY KEY (col_975277, valid WITHOUT OVERLAPS))');

@@ -697,6 +697,10 @@ class IndexOptionsTest extends TestCase
 
     public function testWithoutOverlapsPrimary(): void
     {
+        if (Comparator::lessThan($this->getConnection()->serverVersion(), '18')) {
+            $this->markTestSkipped('WITHOUT OVERLAPS is first supported with PostgreSQL 18.');
+        }
+
         Schema::createExtensionIfNotExists('btree_gist');
         Schema::create('test_897145', function (Blueprint $table): void {
             $table->string('col_301428');
@@ -712,6 +716,10 @@ class IndexOptionsTest extends TestCase
 
     public function testWithoutOverlapsUniqueByColumn(): void
     {
+        if (Comparator::lessThan($this->getConnection()->serverVersion(), '18')) {
+            $this->markTestSkipped('WITHOUT OVERLAPS is first supported with PostgreSQL 18.');
+        }
+
         Schema::createExtensionIfNotExists('btree_gist');
         Schema::create('test_849793', function (Blueprint $table): void {
             $table->string('col_376999');
@@ -727,6 +735,10 @@ class IndexOptionsTest extends TestCase
 
     public function testWithoutOverlapsUniqueByName(): void
     {
+        if (Comparator::lessThan($this->getConnection()->serverVersion(), '18')) {
+            $this->markTestSkipped('WITHOUT OVERLAPS is first supported with PostgreSQL 18.');
+        }
+
         Schema::createExtensionIfNotExists('btree_gist');
         Schema::create('test_224202', function (Blueprint $table): void {
             $table->string('col_405091');
