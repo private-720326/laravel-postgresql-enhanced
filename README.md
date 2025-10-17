@@ -648,6 +648,7 @@ Order::query()
 
 > [!NOTE]
 > There is no Eloquent implementation for temporal features yet.
+> But a full implementation would replace Laravel's soft-deletes implementation.
 
 ### Domain Types
 
