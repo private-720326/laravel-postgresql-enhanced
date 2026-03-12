@@ -1,4 +1,4 @@
-name: Laravel 12.x Compatability
+name: Laravel 13.x Compatability
 
 on:
   schedule:
