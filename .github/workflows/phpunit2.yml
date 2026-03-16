@@ -3,17 +3,24 @@ name: Testing
 on: [push, pull_request]
 
 jobs:
-  laravel6:
-    name: Laravel 6.x
+#  laravel6:
+#    name: Laravel 6.x
+#    uses: ./.github/workflows/phpunit2-laravel.yml
+#    with:
+#      laravel: 6.*
+#      php: '["8.0"]'
+#      doctrine: ^2.6
+#  laravel7:
+#    name: Laravel 7.x
+#    uses: ./.github/workflows/phpunit2-laravel.yml
+#    with:
+#      laravel: 7.*
+#      php: '["8.0"]'
+#      doctrine: ^2.6
+  laravel8:
+    name: Laravel 8.x
     uses: ./.github/workflows/phpunit2-laravel.yml
     with:
-      laravel: 6
-      php: '["8.0"]'
-      doctrine: ^2.6
-  laravel7:
-    name: Laravel 7.x
-    uses: ./.github/workflows/phpunit2-laravel.yml
-    with:
-      laravel: 7
-      php: '["8.0"]'
+      laravel: 8.*
+      php: '["8.0", "8.1", "8.2"]'
       doctrine: ^2.6
