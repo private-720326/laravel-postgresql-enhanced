@@ -42,8 +42,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: fileinfo, pdo
-          coverage: xdebug
 
       - name: Setup problem matchers
         run: |
@@ -52,7 +50,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ inputs.laravel }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ inputs.laravel }}" "orchestra/testbench:4.*" "doctrine/dbal:^2.6" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
