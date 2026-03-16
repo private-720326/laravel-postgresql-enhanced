@@ -1,17 +1,9 @@
-name: PHPUnit (Laravel)
+name: Laravel 13.x Compatability
 
 on:
-  workflow_call:
-    inputs:
-      doctrine:
-        required: false
-        type: string
-      laravel:
-        required: true
-        type: string
-      php:
-        required: true
-        type: string
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
 
 jobs:
   test:
@@ -19,15 +11,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ${{ fromJSON(inputs.php) }}
-        stability: [prefer-lowest, prefer-stable]
+        php: [8.3, 8.4, 8.5]
+        laravel: [13.x-dev]
+        testbench: [11.*]
 
-    name: PHP ${{ matrix.php }} - ${{ matrix.stability }}
+    name: P${{ matrix.php }} - L${{ matrix.laravel }}
 
     services:
       postgres:
-        image: postgres:18
-        #image: timescale/timescaledb-ha:pg18
+        image: timescale/timescaledb-ha:pg18
         env:
           POSTGRES_PASSWORD: postgres
         ports:
@@ -54,8 +46,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ inputs.laravel }}" "doctrine/dbal:${{ inputs.doctrine || '*' }}" --no-interaction --no-update
-          composer update --${{ matrix.stability }} --no-security-blocking --prefer-dist --no-interaction
+          composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction
 
       - name: Execute tests
         run: vendor/bin/phpunit
