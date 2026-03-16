@@ -46,6 +46,8 @@ jobs:
 
       - name: Install dependencies
         run: |
+          composer config minimum-stability dev
+          composer config prefer-stable true
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction
 
       - name: Execute tests
