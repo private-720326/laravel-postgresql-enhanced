@@ -8,7 +8,7 @@ jobs:
     uses: ./.github/workflows/phpunit2-laravel.yml
     with:
       laravel: ^6.0
-      php: '["8.0", "8.1]'
+      php: '["8.0", "8.1"]'
       doctrine: ^2.6
 #  laravel7:
 #    name: Laravel 7.x
