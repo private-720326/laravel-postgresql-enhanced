@@ -24,3 +24,10 @@ jobs:
       laravel: 8.*
       php: '["8.0", "8.1", "8.2", "8.3", "8.4", "8.5"]'
       doctrine: ^2.6
+  laravel9:
+    name: Laravel 9.x
+    uses: ./.github/workflows/phpunit2-laravel.yml
+    with:
+      laravel: 9.*
+      php: '["8.0", "8.1", "8.2", "8.3", "8.4", "8.5"]'
+      doctrine: ^3.5
