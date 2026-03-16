@@ -29,7 +29,7 @@ jobs:
     uses: ./.github/workflows/phpunit2-laravel.yml
     with:
       laravel: ^9.0
-      php: '["8.0", "8.1", "8.2", "8.3", "8.4", "8.5"]'
+      php: '["8.0", "8.1"]'
       doctrine: ^3.5
   laravel10:
     name: Laravel 10.x
@@ -38,21 +38,21 @@ jobs:
       laravel: ^10.0
       php: '["8.1", "8.5"]'
       doctrine: ^3.5
-#  laravel11:
-#    name: Laravel 11.x
-#    uses: ./.github/workflows/phpunit2-laravel.yml
-#    with:
-#      laravel: ^11.0
-#      php: '["8.2", "8.5"]'
-#  laravel12:
-#    name: Laravel 12.x
-#    uses: ./.github/workflows/phpunit2-laravel.yml
-#    with:
-#      laravel: ^12.0
-#      php: '["8.2", "8.5"]'
-#  laravel13:
-#    name: Laravel 13.x
-#    uses: ./.github/workflows/phpunit2-laravel.yml
-#    with:
-#      laravel: ^13.0
-#      php: '["8.3", "8.5"]'
+  laravel11:
+    name: Laravel 11.x
+    uses: ./.github/workflows/phpunit2-laravel.yml
+    with:
+      laravel: ^11.0
+      php: '["8.2", "8.5"]'
+  laravel12:
+    name: Laravel 12.x
+    uses: ./.github/workflows/phpunit2-laravel.yml
+    with:
+      laravel: ^12.0
+      php: '["8.2", "8.5"]'
+  laravel13:
+    name: Laravel 13.x
+    uses: ./.github/workflows/phpunit2-laravel.yml
+    with:
+      laravel: ^13.0
+      php: '["8.3", "8.5"]'
