@@ -9,3 +9,4 @@ jobs:
     with:
       laravel: 6.*
       php: '["8.0"]'
+      doctrine: 2.*

@@ -3,6 +3,9 @@ name: PHPUnit (Laravel)
 on:
   workflow_call:
     inputs:
+      doctrine:
+        required: false
+        type: string
       laravel:
         required: true
         type: string
@@ -51,7 +54,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          composer require "laravel/framework:${{ inputs.laravel }}" --no-interaction --no-update
+          composer require "laravel/framework:${{ inputs.laravel }}" "doctrine/dbal:${{ inputs.doctrine || '*' }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
 
       - name: Execute tests
