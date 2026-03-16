@@ -7,13 +7,13 @@ jobs:
     name: Laravel 6.x
     uses: ./.github/workflows/phpunit2-laravel.yml
     with:
-      laravel: 6.*
-      php: '["8.0", "8.1"]'
+      laravel: 6
+      php: '["8.0"]'
       doctrine: ^2.6
   laravel7:
     name: Laravel 7.x
     uses: ./.github/workflows/phpunit2-laravel.yml
     with:
-      laravel: 7.*
-      php: '["8.0", "8.1", "8.2"]'
+      laravel: 7
+      php: '["8.0"]'
       doctrine: ^2.6
